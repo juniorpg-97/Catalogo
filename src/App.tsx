@@ -11,6 +11,8 @@ import { PaginaSinAcceso } from "./pages/PaginaSinAcesso";
 import "./App.css";
 import { ErrorBoundary } from "./componentes/ErrorBoundary";
 import { SelectorMoneda } from "./componentes/SelectorMoneda";
+import { TemaProvider } from "./context/TemaProvider";
+import { SelectorTema } from "./componentes/SelectorTema";
 
 function App() {
   const autenticado = useAuthStore((s) => s.autenticado);
@@ -29,94 +31,101 @@ function App() {
   }, [verificarSesion]);
 
   return (
-    <>
-      <header className="session-bar">
-        <div className="brand">
-          <div>
-            <p className="brand-title">Tienda Online</p>
-            <p className="brand-subtitle">Tienda de prodcutos varios</p>
+    <TemaProvider>
+      <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+        <header className="session-bar dark:bg-gray-800 dark:border-b dark:border-gray-700">
+          <div className="brand">
+            <div>
+              <p className="brand-title">Tienda Online</p>
+              <p className="brand-subtitle">Tienda de productos varios</p>
+            </div>
           </div>
-        </div>
 
-        <nav className="main-nav" aria-label="Navegación principal">
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              `button ${isActive ? "primary" : "secondary"}`
-            }
-          >
-            Catálogo
-          </NavLink>
-
-          {esAdmin && (
+          <nav className="main-nav" aria-label="Navegación principal">
             <NavLink
-              to="/reportes"
+              to="/"
               className={({ isActive }) =>
                 `button ${isActive ? "primary" : "secondary"}`
               }
             >
-              Reportes
+              Catálogo
             </NavLink>
-          )}
-        </nav>
 
-        <div className="session-actions">
-          <div>
-            <SelectorMoneda></SelectorMoneda>
-          </div>
+            {esAdmin && (
+              <NavLink
+                to="/reportes"
+                className={({ isActive }) =>
+                  `button ${isActive ? "primary" : "secondary"}`
+                }
+              >
+                Reportes
+              </NavLink>
+            )}
+          </nav>
 
-          {autenticado ? (
-            <>
-              <div className="user-info">
-                <strong>{usuarioNombre || "Usuario"}</strong>
-                <span>{usuarioRol || "Cliente"}</span>
-              </div>
+          <div className="session-actions">
+            <div>
+              <SelectorMoneda />
+            </div>
+
+            <div>
+              <SelectorTema />
+            </div>
+
+            {autenticado ? (
+              <>
+                <div className="user-info">
+                  <strong>{usuarioNombre || "Usuario"}</strong>
+                  <span>{usuarioRol || "Cliente"}</span>
+                </div>
+                <button
+                  type="button"
+                  className="button secondary"
+                  onClick={logout}
+                >
+                  Cerrar sesión
+                </button>
+              </>
+            ) : (
               <button
                 type="button"
-                className="button secondary"
-                onClick={logout}
+                className="button primary"
+                onClick={abrirAuth}
               >
-                Cerrar sesión
+                Iniciar sesión
               </button>
-            </>
-          ) : (
-            <button
-              type="button"
-              className="button primary"
-              onClick={abrirAuth}
-            >
-              Iniciar sesión
-            </button>
-          )}
-        </div>
-      </header>
-      {verificandoSesion ? (
-        <p className="empty app-loading">Verificando sesión...</p>
-      ) : (
-        <>
-          <Routes>
-            {/* RUTA PUBLICA la que ve cualquiera*/}
-            <Route path="/" element={<PaginaCatalogo />} />
+            )}
+          </div>
+        </header>
 
-            <Route path="/sin-acceso" element={<PaginaSinAcceso />} />
-            <Route element={<RutaProtegida rolesPermitidos={["admin"]} />}>
-              <Route
-                path="/reportes"
-                element={
-                  <ErrorBoundary>
-                    <PaginaReportes />
-                  </ErrorBoundary>
-                }
-              />
-            </Route>
+        {verificandoSesion ? (
+          <p className="empty app-loading">Verificando sesión...</p>
+        ) : (
+          <>
+            <Routes>
+              <Route path="/" element={<PaginaCatalogo />} />
 
-            <Route path="*" element={<PaginaNotFound></PaginaNotFound>}></Route>
-          </Routes>
+              <Route path="/sin-acceso" element={<PaginaSinAcceso />} />
 
-          {mostrarAuth && !autenticado && <AuthPage onCancel={cerrarAuth} />}
-        </>
-      )}
-    </>
+              <Route element={<RutaProtegida rolesPermitidos={["admin"]} />}>
+                <Route
+                  path="/reportes"
+                  element={
+                    <ErrorBoundary>
+                      <PaginaReportes />
+                    </ErrorBoundary>
+                  }
+                />
+              </Route>
+
+              <Route path="*" element={<PaginaNotFound />} />
+            </Routes>
+
+            {mostrarAuth && !autenticado && <AuthPage onCancel={cerrarAuth} />}
+          </>
+        )}
+      </div>
+    </TemaProvider>
   );
 }
 

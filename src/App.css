@@ -330,7 +330,9 @@ select:focus {
   font-size: 0.78rem;
   font-weight: 700;
   text-decoration: none;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 .primary {
@@ -565,4 +567,153 @@ select:focus {
   .section-title > p {
     margin-top: 8px;
   }
+}
+
+/* ==========================================
+   ESTILOS PARA MODO OSCURO (DARK MODE)
+   ========================================== */
+
+.dark .auth-card {
+  background: #1f2937;
+  border-color: #374151;
+}
+
+.dark .auth-close {
+  color: #a5b4fc;
+}
+
+.dark .auth-card h1 {
+  color: #f9fafb;
+}
+
+.dark .auth-subtitle {
+  color: #9ca3af;
+}
+
+.dark .auth-tabs {
+  background: #374151;
+}
+
+.dark .auth-tabs button {
+  color: #9ca3af;
+}
+
+.dark .auth-tabs button.active {
+  color: #f9fafb;
+  background: #1f2937;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.dark .session-bar {
+  background: #1f2937;
+  border-color: #374151;
+  color: #d1d5db;
+}
+
+.dark .brand-title {
+  color: #f9fafb;
+}
+
+.dark .brand-subtitle {
+  color: #9ca3af;
+}
+
+.dark .user-info strong {
+  color: #c7d2fe;
+}
+
+.dark .hero {
+  background: #312c5a;
+}
+
+.dark .hero p:last-child {
+  color: #c7c1e8;
+}
+
+.dark .stats div,
+.dark .panel,
+.dark .card {
+  background: #1f2937;
+  border-color: #374151;
+}
+
+.dark .stats strong,
+.dark .section-title h2,
+.dark .card-title h3 {
+  color: #f9fafb;
+}
+
+.dark .stats span,
+.dark .section-title > p,
+.dark .card-description,
+.dark .label {
+  color: #9ca3af;
+}
+
+.dark input,
+.dark select {
+  background: #111827;
+  color: #f9fafb;
+  border-color: #4b5563;
+}
+
+.dark input:focus,
+.dark select:focus {
+  border-color: #818cf8;
+  outline-color: rgba(129, 140, 248, 0.2);
+}
+
+.dark .secondary {
+  color: #c7d2fe;
+  background: #312e81;
+}
+
+.dark .secondary:hover {
+  color: #e0e7ff;
+  background: #3730a3;
+}
+
+.dark .card-color {
+  color: #c7d2fe;
+  background: #312e81;
+}
+
+.dark .card-ropa .card-color {
+  color: #fca5a5;
+  background: #7f1d1d;
+}
+
+.dark .card-hogar .card-color {
+  color: #6ee7b7;
+  background: #064e3b;
+}
+
+.dark .card-actions {
+  border-top-color: #374151;
+}
+
+.dark .stock.available {
+  color: #6ee7b7;
+  background: #064e3b;
+}
+
+.dark .stock.empty {
+  color: #fca5a5;
+  background: #7f1d1d;
+}
+
+.dark .empty {
+  color: #9ca3af;
+  background: #111827;
+  border-color: #374151;
+}
+
+.dark .feedback.error {
+  color: #fca5a5;
+  background: #7f1d1d;
+}
+
+.dark .feedback.success {
+  color: #6ee7b7;
+  background: #064e3b;
 }
